@@ -5,14 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Justicia Social | Programa Pro Bono CIMAJ - Pichincha</title>
 
-  <!-- Metadatos Open Graph para vista previa enriquecida en WhatsApp -->
   <meta property="og:title" content="Justicia Social | Programa Pro Bono CIMAJ" />
   <meta property="og:description" content="Asesoría y patrocinio jurídico gratuito en Derecho de Familia y Divorcios básicos en alianza con Fundación Reina de Pichincha y Prefectura de Pichincha." />
   <meta property="og:type" content="website" />
-  <!-- Si subes una imagen portada.jpg a tu repo, descomenta la siguiente línea y pon tu URL completa de GitHub Pages: -->
-  <!-- <meta property="og:image" content="https://TU-USUARIO.github.io/TU-REPOSITORIO/portada.jpg" /> -->
 
-  <!-- Librerías CDN: PDF.js y StPageFlip -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/page-flip@2.0.7/dist/js/page-flip.browser.min.js"></script>
 
@@ -24,11 +20,7 @@
       --text-light: #f8fafc;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
       background: radial-gradient(circle at center, #1e293b 0%, #090d16 100%);
@@ -41,7 +33,6 @@
       user-select: none;
     }
 
-    /* Barra superior institucional */
     header {
       display: flex;
       justify-content: space-between;
@@ -52,27 +43,11 @@
       z-index: 20;
     }
 
-    .brand {
-      display: flex;
-      flex-direction: column;
-    }
+    .brand { display: flex; flex-direction: column; }
+    .brand-title { font-size: 0.95rem; font-weight: 700; color: var(--gold-light); letter-spacing: 0.5px; }
+    .brand-sub { font-size: 0.72rem; color: #cbd5e1; }
 
-    .brand-title {
-      font-size: 0.95rem;
-      font-weight: 700;
-      color: var(--gold-light);
-      letter-spacing: 0.5px;
-    }
-
-    .brand-sub {
-      font-size: 0.72rem;
-      color: #cbd5e1;
-    }
-
-    .actions {
-      display: flex;
-      gap: 8px;
-    }
+    .actions { display: flex; gap: 8px; }
 
     .btn {
       background: rgba(197, 160, 89, 0.15);
@@ -90,18 +65,9 @@
       transition: all 0.2s;
     }
 
-    .btn:hover, .btn:active {
-      background: var(--gold);
-      color: #0f172a;
-    }
+    .btn:hover, .btn:active { background: var(--gold); color: #0f172a; }
+    .btn-wa { background: #16a34a; border-color: #22c55e; color: #ffffff; }
 
-    .btn-wa {
-      background: #16a34a;
-      border-color: #22c55e;
-      color: #ffffff;
-    }
-
-    /* Contenedor principal del Flipbook */
     #viewer-container {
       flex: 1;
       display: flex;
@@ -112,10 +78,7 @@
       overflow: hidden;
     }
 
-    #flipbook {
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.75);
-      display: none;
-    }
+    #flipbook { box-shadow: 0 20px 50px rgba(0, 0, 0, 0.75); display: none; }
 
     .page {
       background-color: #ffffff;
@@ -125,20 +88,16 @@
       align-items: center;
     }
 
-    .page canvas {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      display: block;
-    }
+    .page canvas { width: 100%; height: 100%; object-fit: contain; display: block; }
 
-    /* Pantalla de carga */
     #loader {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 12px;
+      gap: 14px;
       text-align: center;
+      max-width: 420px;
+      padding: 20px;
     }
 
     .spinner {
@@ -150,11 +109,19 @@
       animation: spin 0.9s linear infinite;
     }
 
-    @keyframes spin {
-      to { transform: rotate(360deg); }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    #local-fallback {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(197, 160, 89, 0.4);
+      padding: 16px;
+      border-radius: 10px;
     }
 
-    /* Barra inferior de navegación */
     footer {
       display: flex;
       justify-content: center;
@@ -180,10 +147,7 @@
       justify-content: center;
     }
 
-    .nav-btn:active {
-      background: var(--gold);
-      color: #000;
-    }
+    .nav-btn:active { background: var(--gold); color: #000; }
 
     #page-indicator {
       font-size: 0.85rem;
@@ -202,15 +166,25 @@
       <span class="brand-sub">Programa Pro Bono 2026</span>
     </div>
     <div class="actions">
-      <a href="Justicia-Social.pdf" download class="btn" title="Descargar PDF">⬇ PDF</a>
+      <a id="download-link" href="Justicia-Social.pdf" download class="btn" title="Descargar PDF">⬇ PDF</a>
       <a href="https://wa.me/593998877398?text=Hola%20CIMAJ,%20vengo%20del%20Book%20Institucional%20Justicia%20Social%20Pro%20Bono" target="_blank" class="btn btn-wa">WhatsApp</a>
     </div>
   </header>
 
   <main id="viewer-container">
     <div id="loader">
-      <div class="spinner"></div>
+      <div class="spinner" id="spinner"></div>
       <p id="loader-text" style="font-size: 0.9rem; color: #e2e8f0;">Cargando brochure interactivo...</p>
+      
+      <div id="local-fallback">
+        <p style="font-size: 0.82rem; color: #cbd5e1;">
+          Si abriste este archivo directamente en tu Mac (sin subirlo aún a GitHub), tu navegador bloquea la carga automática por seguridad. Selecciónalo aquí para probarlo:
+        </p>
+        <label class="btn" style="cursor: pointer;">
+          📂 Seleccionar Justicia-Social.pdf
+          <input type="file" id="file-picker" accept="application/pdf" style="display: none;" />
+        </label>
+      </div>
     </div>
     <div id="flipbook"></div>
   </main>
@@ -222,98 +196,121 @@
   </footer>
 
   <script>
-    const PDF_URL = 'Justicia-Social.pdf';
     pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
     let pageFlip = null;
     let totalPages = 0;
 
-    async function initFlipbook() {
-      try {
-        const loadingTask = pdfjsLib.getDocument(PDF_URL);
-        const pdf = await loadingTask.promise;
-        totalPages = pdf.numPages;
+    // Posibles variantes de nombre en el repositorio GitHub
+    const CANDIDATE_FILES = [
+      'Justicia-Social.pdf',
+      'justicia-social.pdf',
+      'Justicia Social.pdf',
+      'JUSTICIA-SOCIAL.pdf'
+    ];
 
-        const flipbookEl = document.getElementById('flipbook');
-        const loaderText = document.getElementById('loader-text');
+    async function renderPdfDocument(pdfSource) {
+      const loadingTask = pdfjsLib.getDocument(pdfSource);
+      const pdf = await loadingTask.promise;
+      totalPages = pdf.numPages;
 
-        // Obtener dimensiones reales de la primera página
-        const firstPage = await pdf.getPage(1);
-        const baseViewport = firstPage.getViewport({ scale: 1 });
-        const aspectRatio = baseViewport.width / baseViewport.height;
+      const flipbookEl = document.getElementById('flipbook');
+      const loaderText = document.getElementById('loader-text');
+      flipbookEl.innerHTML = '';
 
-        // Renderizar cada página del PDF en alta nitidez
-        for (let pageNum = 1; pageNum <= totalPages; pageNum++) {
-          loaderText.textContent = `Preparando página ${pageNum} de ${totalPages}...`;
-          const page = await pdf.getPage(pageNum);
-          // Escala 2.2 para máxima nitidez en textos y código QR
-          const viewport = page.getViewport({ scale: 2.2 });
+      const firstPage = await pdf.getPage(1);
+      const baseViewport = firstPage.getViewport({ scale: 1 });
+      const aspectRatio = baseViewport.width / baseViewport.height;
 
-          const pageDiv = document.createElement('div');
-          pageDiv.className = 'page';
+      for (let pageNum = 1; pageNum <= totalPages; pageNum++) {
+        loaderText.textContent = `Preparando página ${pageNum} de ${totalPages}...`;
+        const page = await pdf.getPage(pageNum);
+        const viewport = page.getViewport({ scale: 2.2 });
 
-          const canvas = document.createElement('canvas');
-          const context = canvas.getContext('2d');
-          canvas.width = viewport.width;
-          canvas.height = viewport.height;
+        const pageDiv = document.createElement('div');
+        pageDiv.className = 'page';
 
-          await page.render({
-            canvasContext: context,
-            viewport: viewport
-          }).promise;
+        const canvas = document.createElement('canvas');
+        const context = canvas.getContext('2d');
+        canvas.width = viewport.width;
+        canvas.height = viewport.height;
 
-          pageDiv.appendChild(canvas);
-          flipbookEl.appendChild(pageDiv);
-        }
-
-        // Calcular tamaño óptimo según pantalla (móvil vertical vs escritorio)
-        const container = document.getElementById('viewer-container');
-        const isMobile = window.innerWidth < 768;
-        const maxHeight = container.clientHeight - 20;
-        const maxWidth = isMobile ? (container.clientWidth - 16) : ((container.clientWidth - 40) / 2);
-
-        let pageHeight = maxHeight;
-        let pageWidth = pageHeight * aspectRatio;
-
-        if (pageWidth > maxWidth) {
-          pageWidth = maxWidth;
-          pageHeight = pageWidth / aspectRatio;
-        }
-
-        document.getElementById('loader').style.display = 'none';
-        flipbookEl.style.display = 'block';
-
-        pageFlip = new St.PageFlip(flipbookEl, {
-          width: Math.floor(pageWidth),
-          height: Math.floor(pageHeight),
-          size: 'fixed',
-          minWidth: 250,
-          maxWidth: 1000,
-          minHeight: 350,
-          maxHeight: 1400,
-          showCover: true,
-          mobileScrollSupport: false,
-          usePortrait: isMobile, // 1 página en celular vertical, 2 páginas tipo libro en PC
-          flippingTime: 700,
-          maxShadowOpacity: 0.5
-        });
-
-        pageFlip.loadFromHTML(document.querySelectorAll('.page'));
-
-        updateIndicator(0);
-
-        pageFlip.on('flip', (e) => {
-          updateIndicator(e.data);
-        });
-
-        document.getElementById('btn-prev').addEventListener('click', () => pageFlip.flipPrev());
-        document.getElementById('btn-next').addEventListener('click', () => pageFlip.flipNext());
-
-      } catch (err) {
-        document.getElementById('loader-text').textContent = 'Error al cargar Justicia-Social.pdf. Verifica que el archivo esté en la misma carpeta.';
-        console.error(err);
+        await page.render({ canvasContext: context, viewport: viewport }).promise;
+        pageDiv.appendChild(canvas);
+        flipbookEl.appendChild(pageDiv);
       }
+
+      const container = document.getElementById('viewer-container');
+      const isMobile = window.innerWidth < 768;
+      const maxHeight = container.clientHeight - 20;
+      const maxWidth = isMobile ? (container.clientWidth - 16) : ((container.clientWidth - 40) / 2);
+
+      let pageHeight = maxHeight;
+      let pageWidth = pageHeight * aspectRatio;
+
+      if (pageWidth > maxWidth) {
+        pageWidth = maxWidth;
+        pageHeight = pageWidth / aspectRatio;
+      }
+
+      document.getElementById('loader').style.display = 'none';
+      flipbookEl.style.display = 'block';
+
+      pageFlip = new St.PageFlip(flipbookEl, {
+        width: Math.floor(pageWidth),
+        height: Math.floor(pageHeight),
+        size: 'fixed',
+        minWidth: 250,
+        maxWidth: 1000,
+        minHeight: 350,
+        maxHeight: 1400,
+        showCover: true,
+        mobileScrollSupport: false,
+        usePortrait: isMobile,
+        flippingTime: 700,
+        maxShadowOpacity: 0.5
+      });
+
+      pageFlip.loadFromHTML(document.querySelectorAll('.page'));
+      updateIndicator(0);
+
+      pageFlip.on('flip', (e) => updateIndicator(e.data));
+      document.getElementById('btn-prev').onclick = () => pageFlip.flipPrev();
+      document.getElementById('btn-next').onclick = () => pageFlip.flipNext();
     }
+
+    async function initFlipbook() {
+      // Si se abre localmente con file://, mostrar selector directo para evitar bloqueo CORS de Chrome/Safari
+      if (window.location.protocol === 'file:') {
+        document.getElementById('spinner').style.display = 'none';
+        document.getElementById('loader-text').textContent = 'Vista previa local en Mac';
+        document.getElementById('local-fallback').style.display = 'flex';
+        return;
+      }
+
+      for (const fileName of CANDIDATE_FILES) {
+        try {
+          await renderPdfDocument(fileName);
+          document.getElementById('download-link').href = fileName;
+          return;
+        } catch (e) {
+          // Probar siguiente variante de nombre
+        }
+      }
+
+      document.getElementById('spinner').style.display = 'none';
+      document.getElementById('loader-text').textContent = 'No se encontró Justicia-Social.pdf en el repositorio.';
+      document.getElementById('local-fallback').style.display = 'flex';
+    }
+
+    document.getElementById('file-picker').addEventListener('change', async (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      document.getElementById('local-fallback').style.display = 'none';
+      document.getElementById('spinner').style.display = 'block';
+      const arrayBuffer = await file.arrayBuffer();
+      await renderPdfDocument({ data: arrayBuffer });
+    });
 
     function updateIndicator(currentIndex) {
       document.getElementById('page-indicator').textContent = `${currentIndex + 1} / ${totalPages}`;
